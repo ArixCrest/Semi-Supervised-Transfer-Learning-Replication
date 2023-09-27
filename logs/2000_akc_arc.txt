@@ -1,0 +1,182 @@
+pid: 1
+default model wideresnetleaky 28 2
+args: Namespace(alg='cr', alpha=0.1, bn_momentum=0.001, coef=0, consistency='ce', cutout_size=0.5, data_root='/workspace/data/minor1/data/SVHN', dataset='svhn', depth=28, ema_apply_wd=False, ema_teacher=False, ema_teacher_factor=0.999, ema_teacher_train=False, ema_teacher_warmup=False, epochs=10, eval_every=1, imprint=1, interleave=1, iteration=1000, kd_ent_class=1000, kd_threshold=0.7, l_batch_size=64, labeled_aug='WA', lambda_kd=0.5, lambda_mmd=0.5, lr=0.001, merge_one_batch=0, mmd_feat_table_l=128, mmd_feat_table_u=128, mmd_threshold=0.7, model='wideresnetleaky', momentum=0.9, n_imgs_per_epoch=6400, net_name='wideresnetleaky_28_2', num_cycles=0.49375, num_labels=2000, num_unlabels=-1, num_workers=1, out_dir='/workspace/data/minor1', per_epoch_steps=100, pretrained=1, pretrained_weight_path='/workspace/storage/minor1/codes/code/ckpt', reg_warmup=10, reg_warmup_iter=100, result_dir='/workspace/data/minor1/svhn@2000', resume=None, save_every=200, save_path='/workspace/data/minor1/svhn@2000/3', seed=1, sharpen=None, strong_aug=False, task_name='svhn@2000', temp_softmax=None, threshold=None, ul_batch_size=448, unlabeled_aug='WA', wa='t.t.f', warmup_iter=0, weight_decay=0.0005, widen_factor=2)
+load dataset
+number of :
+ training data: 73257
+ labeled data: 2000
+ unlabeled data: 73257
+ test data: 26032
+labeled augmentation
+Compose(
+    RandomHorizontalFlip(p=0.5)
+    RandomCrop(size=(32, 32), padding=4)
+    ToTensor()
+    Normalize(mean=(0.481, 0.457, 0.408), std=(0.26, 0.253, 0.268))
+)
+unlabeled augmentation
+Compose(
+    RandomHorizontalFlip(p=0.5)
+    RandomCrop(size=(32, 32), padding=4)
+    ToTensor()
+    Normalize(mean=(0.481, 0.457, 0.408), std=(0.26, 0.253, 0.268))
+)
+==> creating model 'wideresnetleaky'
+load pretrained model from /workspace/storage/minor1/codes/code/ckpt/wideresnetleaky_28_2.pth
+Imprint the classifier of the model
+==> creating model 'wideresnetleaky'
+load pretrained model from /workspace/storage/minor1/codes/code/ckpt/wideresnetleaky_28_2.pth
+Total params: 1.47M
+DataParallel(
+  (module): WideResnet_leaky(
+    (conv1): Conv2d(3, 16, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (layer1): Sequential(
+      (0): BasicBlockPreAct(
+        (bn1): BatchNorm2d(16, eps=1e-05, momentum=0.001, affine=True, track_running_stats=True)
+        (relu1): LeakyReLU(negative_slope=0.1, inplace=True)
+        (conv1): Conv2d(16, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.001, affine=True, track_running_stats=True)
+        (relu2): LeakyReLU(negative_slope=0.1, inplace=True)
+        (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (downsample): Conv2d(16, 32, kernel_size=(1, 1), stride=(1, 1))
+      )
+      (1): BasicBlockPreAct(
+        (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.001, affine=True, track_running_stats=True)
+        (relu1): LeakyReLU(negative_slope=0.1, inplace=True)
+        (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.001, affine=True, track_running_stats=True)
+        (relu2): LeakyReLU(negative_slope=0.1, inplace=True)
+        (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      )
+      (2): BasicBlockPreAct(
+        (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.001, affine=True, track_running_stats=True)
+        (relu1): LeakyReLU(negative_slope=0.1, inplace=True)
+        (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.001, affine=True, track_running_stats=True)
+        (relu2): LeakyReLU(negative_slope=0.1, inplace=True)
+        (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      )
+      (3): BasicBlockPreAct(
+        (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.001, affine=True, track_running_stats=True)
+        (relu1): LeakyReLU(negative_slope=0.1, inplace=True)
+        (conv1): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (bn2): BatchNorm2d(32, eps=1e-05, momentum=0.001, affine=True, track_running_stats=True)
+        (relu2): LeakyReLU(negative_slope=0.1, inplace=True)
+        (conv2): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      )
+    )
+    (layer2): Sequential(
+      (0): BasicBlockPreAct(
+        (bn1): BatchNorm2d(32, eps=1e-05, momentum=0.001, affine=True, track_running_stats=True)
+        (relu1): LeakyReLU(negative_slope=0.1, inplace=True)
+        (conv1): Conv2d(32, 64, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+        (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.001, affine=True, track_running_stats=True)
+        (relu2): LeakyReLU(negative_slope=0.1, inplace=True)
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (downsample): Conv2d(32, 64, kernel_size=(1, 1), stride=(2, 2))
+      )
+      (1): BasicBlockPreAct(
+        (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.001, affine=True, track_running_stats=True)
+        (relu1): LeakyReLU(negative_slope=0.1, inplace=True)
+        (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.001, affine=True, track_running_stats=True)
+        (relu2): LeakyReLU(negative_slope=0.1, inplace=True)
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      )
+      (2): BasicBlockPreAct(
+        (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.001, affine=True, track_running_stats=True)
+        (relu1): LeakyReLU(negative_slope=0.1, inplace=True)
+        (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.001, affine=True, track_running_stats=True)
+        (relu2): LeakyReLU(negative_slope=0.1, inplace=True)
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      )
+      (3): BasicBlockPreAct(
+        (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.001, affine=True, track_running_stats=True)
+        (relu1): LeakyReLU(negative_slope=0.1, inplace=True)
+        (conv1): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (bn2): BatchNorm2d(64, eps=1e-05, momentum=0.001, affine=True, track_running_stats=True)
+        (relu2): LeakyReLU(negative_slope=0.1, inplace=True)
+        (conv2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      )
+    )
+    (layer3): Sequential(
+      (0): BasicBlockPreAct(
+        (bn1): BatchNorm2d(64, eps=1e-05, momentum=0.001, affine=True, track_running_stats=True)
+        (relu1): LeakyReLU(negative_slope=0.1, inplace=True)
+        (conv1): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+        (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.001, affine=True, track_running_stats=True)
+        (relu2): LeakyReLU(negative_slope=0.1, inplace=True)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (downsample): Conv2d(64, 128, kernel_size=(1, 1), stride=(2, 2))
+      )
+      (1): BasicBlockPreAct(
+        (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.001, affine=True, track_running_stats=True)
+        (relu1): LeakyReLU(negative_slope=0.1, inplace=True)
+        (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.001, affine=True, track_running_stats=True)
+        (relu2): LeakyReLU(negative_slope=0.1, inplace=True)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      )
+      (2): BasicBlockPreAct(
+        (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.001, affine=True, track_running_stats=True)
+        (relu1): LeakyReLU(negative_slope=0.1, inplace=True)
+        (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.001, affine=True, track_running_stats=True)
+        (relu2): LeakyReLU(negative_slope=0.1, inplace=True)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      )
+      (3): BasicBlockPreAct(
+        (bn1): BatchNorm2d(128, eps=1e-05, momentum=0.001, affine=True, track_running_stats=True)
+        (relu1): LeakyReLU(negative_slope=0.1, inplace=True)
+        (conv1): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (bn2): BatchNorm2d(128, eps=1e-05, momentum=0.001, affine=True, track_running_stats=True)
+        (relu2): LeakyReLU(negative_slope=0.1, inplace=True)
+        (conv2): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      )
+    )
+    (bn_last): BatchNorm2d(128, eps=1e-05, momentum=0.001, affine=True, track_running_stats=True)
+    (relu_last): LeakyReLU(negative_slope=0.1, inplace=True)
+    (pool): AdaptiveAvgPool2d(output_size=1)
+    (classifier): Linear(in_features=128, out_features=10, bias=True)
+  )
+)
+training
+
+Epoch: [0 | 10] LR: 0.001000 Epoch Time: 0.000 min
+Epoch: 0, Learning Rate: 0.001, Train Loss: 1.3136724585294723, Loss CE: 1.2664341354370117, Loss SSL: 0.0, Loss MMD: 0.01390943130478263, Loss KD: 0.16822847336530686, Labeled Acc: 0.5696875, Unlabeled Acc: 0.5093750220537185, Mask SSL: 0.0, Mask MMD: 0.5155802965164185, Mask KD: 0.94886714220047, Test Loss: 1.1386821662712918, Test Acc.: 0.6622234176255913, Test Raw Acc.: 0.6622234176255913, Time: 37.22435188293457, 
+
+Epoch: [1 | 10] LR: 0.000988 Epoch Time: 0.000 min
+Epoch: 1, Learning Rate: 0.000987993594827769, Train Loss: 0.6647747790813446, Loss CE: 0.5678843274712563, Loss SSL: 0.0, Loss MMD: 0.015628889948129655, Loss KD: 0.17815201133489608, Labeled Acc: 0.81375, Unlabeled Acc: 0.6754018169641495, Mask SSL: 0.0, Mask MMD: 0.8506694436073303, Mask KD: 0.9497656226158142, Test Loss: 0.9287873005383427, Test Acc.: 0.7298709280152371, Test Raw Acc.: 0.7298709280152371, Time: 37.375248432159424, 
+
+Epoch: [2 | 10] LR: 0.000952 Epoch Time: 0.000 min
+Epoch: 2, Learning Rate: 0.0009522626868413953, Train Loss: 0.394356684833765, Loss CE: 0.29690191939473154, Loss SSL: 0.0, Loss MMD: 0.015633466308936476, Loss KD: 0.17927606403827667, Labeled Acc: 0.90234375, Unlabeled Acc: 0.7151339602470398, Mask SSL: 0.0, Mask MMD: 0.93524569272995, Mask KD: 0.9490429759025574, Test Loss: 0.9454381836288607, Test Acc.: 0.7305623852701075, Test Raw Acc.: 0.7305623852701075, Time: 37.596341371536255, 
+
+Epoch: [3 | 10] LR: 0.000894 Epoch Time: 0.000 min
+Epoch: 3, Learning Rate: 0.0008936652755577915, Train Loss: 0.26174027889966966, Loss CE: 0.16426279775798322, Loss SSL: 0.0, Loss MMD: 0.01564493974670768, Loss KD: 0.17931002095341683, Labeled Acc: 0.9496875, Unlabeled Acc: 0.7233482503890991, Mask SSL: 0.0, Mask MMD: 0.9678347706794739, Mask KD: 0.9493749737739563, Test Loss: 0.9912637675475253, Test Acc.: 0.7449677323884736, Test Raw Acc.: 0.7449677323884736, Time: 37.431859254837036, 
+
+Epoch: [4 | 10] LR: 0.000814 Epoch Time: 0.000 min
+Epoch: 4, Learning Rate: 0.000813608449500787, Train Loss: 0.17839278303086759, Loss CE: 0.08111306289210915, Loss SSL: 0.0, Loss MMD: 0.015640116706490518, Loss KD: 0.1789193232357502, Labeled Acc: 0.98078125, Unlabeled Acc: 0.732366104722023, Mask SSL: 0.0, Mask MMD: 0.9796651005744934, Mask KD: 0.9505664110183716, Test Loss: 1.081046865040639, Test Acc.: 0.7383988941822157, Test Raw Acc.: 0.7383988941822157, Time: 38.44371175765991, 
+
+Epoch: [5 | 10] LR: 0.000714 Epoch Time: 0.000 min
+Epoch: 5, Learning Rate: 0.0007140145980512682, Train Loss: 0.1541079169511795, Loss CE: 0.05789874550886452, Loss SSL: 0.0, Loss MMD: 0.015644286964088677, Loss KD: 0.17677405580878258, Labeled Acc: 0.988125, Unlabeled Acc: 0.7343303930759429, Mask SSL: 0.0, Mask MMD: 0.9833705425262451, Mask KD: 0.94921875, Test Loss: 0.9804368626873553, Test Acc.: 0.7591041796545932, Test Raw Acc.: 0.7591041796545932, Time: 38.368228912353516, 
+
+Epoch: [6 | 10] LR: 0.000597 Epoch Time: 0.000 min
+Epoch: 6, Learning Rate: 0.000597275249475567, Train Loss: 0.13243901148438453, Loss CE: 0.037256912691518665, Loss SSL: 0.0, Loss MMD: 0.015636157970875503, Loss KD: 0.17472803980112075, Labeled Acc: 0.9934375, Unlabeled Acc: 0.7389955699443818, Mask SSL: 0.0, Mask MMD: 0.9872990846633911, Mask KD: 0.9527343511581421, Test Loss: 1.0265043110809373, Test Acc.: 0.7590273509893083, Test Raw Acc.: 0.7590273509893083, Time: 37.9454619884491, 
+
+Epoch: [7 | 10] LR: 0.000466 Epoch Time: 0.000 min
+Epoch: 7, Learning Rate: 0.00046619364361076787, Train Loss: 0.12212986923754215, Loss CE: 0.027981011937372388, Loss SSL: 0.0, Loss MMD: 0.01564369386062026, Loss KD: 0.17265401974320413, Labeled Acc: 0.99625, Unlabeled Acc: 0.7433928894996643, Mask SSL: 0.0, Mask MMD: 0.9867185950279236, Mask KD: 0.9508007764816284, Test Loss: 1.0066574728408326, Test Acc.: 0.7609096496985892, Test Raw Acc.: 0.7609096496985892, Time: 38.83822321891785, 
+
+Epoch: [8 | 10] LR: 0.000324 Epoch Time: 0.000 min
+Epoch: 8, Learning Rate: 0.0003239174181981494, Train Loss: 0.11403693228960038, Loss CE: 0.02066127727739513, Loss SSL: 0.0, Loss MMD: 0.015647411001846193, Loss KD: 0.1711038987338543, Labeled Acc: 0.9978125, Unlabeled Acc: 0.742767893075943, Mask SSL: 0.0, Mask MMD: 0.9890401363372803, Mask KD: 0.9504687190055847, Test Loss: 0.9975083424184831, Test Acc.: 0.7645974188548477, Test Raw Acc.: 0.7645974188548477, Time: 38.19177031517029, 
+
+Epoch: [9 | 10] LR: 0.000174 Epoch Time: 0.000 min
+Epoch: 9, Learning Rate: 0.00017386302525507091, Train Loss: 0.11073418661952018, Loss CE: 0.017779737319797276, Loss SSL: 0.0, Loss MMD: 0.015637649605050683, Loss KD: 0.17027124866843224, Labeled Acc: 0.998125, Unlabeled Acc: 0.7452455651760101, Mask SSL: 0.0, Mask MMD: 0.9896875619888306, Mask KD: 0.9507616758346558, Test Loss: 0.9968841238555252, Test Acc.: 0.7645974191479252, Test Raw Acc.: 0.7645974191479252, Time: 38.132521629333496, 
+mean test acc. over last 1 checkpoints: 0.7645974191479252
+median test acc. over last 1 checkpoints: 0.7645974191479252
+mean test acc. over last 10 checkpoints: 0.7414259375826889
+median test acc. over last 10 checkpoints: 0.7519975416888909
+mean test acc. over last 20 checkpoints: 0.7414259375826889
+median test acc. over last 20 checkpoints: 0.7519975416888909
+mean test acc. over last 50 checkpoints: 0.7414259375826889
+median test acc. over last 50 checkpoints: 0.7519975416888909
